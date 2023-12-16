@@ -1,5 +1,5 @@
 package br.com.projeto.template.repository;
 
-public class UsuarioRepository {
+public class UserRepository {
 
 }
