@@ -32,7 +32,11 @@ class TemplateApplicationTests {
 	
 	@Test
 	void createUserFailure() {
-		
+		webTestClient
+			.post()
+			.uri("/user")
+			.bodyValue(new UserDto("", "", "password2"))
+			.exchange().expectStatus().isOk();//isBadRequest();
 	}
 
 }
