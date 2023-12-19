@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.template.dto.UserDto;
 import br.com.projeto.template.service.UserService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -30,13 +31,13 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public List<UserDto> createUser(@RequestBody UserDto user) {
+	public List<UserDto> createUser(@RequestBody @Valid UserDto user) {
 		userService.createUser(user);
 		return userService.listAll();
 	}
 	
 	@PutMapping
-	public UserDto updateUser(@RequestBody UserDto user) {
+	public UserDto updateUser(@RequestBody @Valid UserDto user) {
 		return userService.updateUser(user);
 	}
 	

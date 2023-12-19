@@ -28,7 +28,6 @@ class TemplateApplicationTests {
 			.jsonPath("$[0].name").isEqualTo(user.getName())
 			.jsonPath("$[0].login").isEqualTo(user.getLogin())
 			.jsonPath("$[0].password").isEqualTo(user.getPassword());
-	
 	}
 	
 	@Test
