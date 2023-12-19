@@ -30,8 +30,9 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public void createUser(@RequestBody UserDto user) {
+	public List<UserDto> createUser(@RequestBody UserDto user) {
 		userService.createUser(user);
+		return userService.listAll();
 	}
 	
 	@PutMapping

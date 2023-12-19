@@ -27,4 +27,10 @@ public class UserDto {
 	public UserDto(UserEntity entity) {
 		BeanUtils.copyProperties(entity, this);
 	}
+
+	public UserDto(String name, String login, String password) {
+		this.name = name;
+		this.login = login;
+		this.password = password;
+	}
 }
