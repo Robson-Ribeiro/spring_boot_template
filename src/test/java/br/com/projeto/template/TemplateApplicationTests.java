@@ -169,41 +169,33 @@ class TemplateApplicationTests {
 			.expectStatus().isEqualTo(500);
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	void searchByIdSuccess() {
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		
+		webTestClient
+			.get()
+			.uri("/user/1")
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody()
+			.jsonPath("$").isEqualTo(user);
+	}
+	
+	@Test
+	void searchByIdFailure() {
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		
+		webTestClient
+			.get()
+			.uri("/user/2")
+			.exchange()
+			.expectStatus().isEqualTo(500)
+			.expectBody()
+			.jsonPath("$.error").isEqualTo("Internal Server Error");
+	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
