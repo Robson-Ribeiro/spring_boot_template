@@ -145,6 +145,31 @@ class TemplateApplicationTests {
 			.expectStatus().isBadRequest();
 	}
 	
+	@Test
+	void deleteUserSuccess() {
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		
+		webTestClient
+			.delete()
+			.uri("/user/1")
+			.exchange()
+			.expectStatus().isOk();
+	}
+	
+	@Test 
+	void deleteUserFailure() {
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		
+		webTestClient
+			.delete()
+			.uri("/user/2")
+			.exchange()
+			.expectStatus().isEqualTo(500);
+	}
+	
+	
 }
 
 
