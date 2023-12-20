@@ -67,7 +67,118 @@ class TemplateApplicationTests {
 			.jsonPath("$[0].password").isEqualTo(user.getPassword());
 	}
 	
+	@Test
+	void updateUserSuccess() {
+		UserDto updatedUser = new UserDto("Ronald", "LOGIN", "PASSWORD");
+		updatedUser.setId((long) 1);
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isOk()
+			.expectBody()
+			.jsonPath("$.name").isEqualTo(updatedUser.getName())
+			.jsonPath("$.login").isEqualTo(updatedUser.getLogin())
+			.jsonPath("$.password").isEqualTo(updatedUser.getPassword())
+			.jsonPath("$.id").isEqualTo(updatedUser.getId());
+	}
 	
-	
+	@Test
+	void updateUserFailure() {
+		UserDto updatedUser = new UserDto("", "", "");
+		updatedUser.setId((long) 1);
+		UserEntity user = new UserEntity("Rob", "login", "password");
+		userRepository.save(user);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+		
+		updatedUser = new UserDto("1", "", "");
+		updatedUser.setId((long) 1);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+		
+		updatedUser = new UserDto("", "2", "");
+		updatedUser.setId((long) 1);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+		
+		updatedUser = new UserDto("", "", "3");
+		updatedUser.setId((long) 1);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+
+		updatedUser = new UserDto("1", "2", "");
+		updatedUser.setId((long) 1);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+		
+		updatedUser = new UserDto("", "2", "3");
+		updatedUser.setId((long) 1);
+		webTestClient
+			.put()
+			.uri("/user")
+			.bodyValue(updatedUser)
+			.exchange()
+			.expectStatus().isBadRequest();
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
