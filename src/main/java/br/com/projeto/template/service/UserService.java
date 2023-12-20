@@ -3,6 +3,7 @@ package br.com.projeto.template.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.projeto.template.dto.UserDto;
@@ -16,7 +17,11 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public List<UserDto> listAll() {
-		List<UserEntity> users = userRepository.findAll();
+		Sort sort = Sort.by("id").ascending().and(
+				Sort.by("name").ascending()	
+		);
+		
+		List<UserEntity> users = userRepository.findAll(sort);
 		return users.stream().map(UserDto::new).toList();
 	}
 	
