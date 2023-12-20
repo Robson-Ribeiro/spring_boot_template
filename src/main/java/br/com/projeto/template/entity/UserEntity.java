@@ -37,6 +37,15 @@ public class UserEntity {
 		BeanUtils.copyProperties(dto, this);
 	}
 
+	
+	
+	public UserEntity(String name, String login, String password) {
+		super();
+		this.name = name;
+		this.login = login;
+		this.password = password;
+	}
+
 	public Long getId() {
 		return id;
 	}
